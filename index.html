@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generate SKRD</title>
+<meta name="theme-color" content="#152a63">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  iframe {
+    border: none;
+    width: 100%;
+    height: 100vh;
+    display: block;
+  }
+  #fallback {
+    display: none;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 40px 20px;
+    color: #152a63;
+  }
+  #fallback a {
+    color: #152a63;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <iframe id="app-frame" src="https://script.google.com/macros/s/AKfycbzqSaOe5IUinDlVIuRIOjswFyvlejah0i_clJr9KkQ9NPo2S1FtP7AUHXTe-FXjNmxK/exec" title="Generate SKRD"></iframe>
+  <div id="fallback">
+    <p>Aplikasi tidak bisa ditampilkan di dalam frame.</p>
+    <p><a href="https://script.google.com/macros/s/AKfycbzqSaOe5IUinDlVIuRIOjswFyvlejah0i_clJr9KkQ9NPo2S1FtP7AUHXTe-FXjNmxK/exec" target="_top">Buka langsung di sini</a></p>
+  </div>
+
+<script>
+  // Deteksi kalau iframe gagal load (X-Frame-Options block)
+  const frame = document.getElementById('app-frame');
+  const fallback = document.getElementById('fallback');
+  let loaded = false;
+
+  frame.addEventListener('load', () => { loaded = true; });
+
+  setTimeout(() => {
+    try {
+      // Jika iframe kosong/blank karena diblokir, tampilkan fallback
+      if (!loaded) {
+        frame.style.display = 'none';
+        fallback.style.display = 'block';
+      }
+    } catch (e) {
+      frame.style.display = 'none';
+      fallback.style.display = 'block';
+    }
+  }, 4000);
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
